@@ -1,12 +1,13 @@
 version: 2.1
 orbs:
   node: circleci/node@5.0.1
+  docker: circleci/docker@2.1.4 #allows us to use docker orb's commands
 jobs:
   build:
     docker:
       - image: cimg/node:16.10
     steps:
-      - checkout
+      - checkout #copies the working directory of the project
       - node/install-packages:
           pkg-manager: npm
       - run: |
@@ -22,6 +23,18 @@ jobs:
       - run: |
           echo "Running tests..."
           npm run test
+  build-and-push:
+    executor: docker/docker #State the environment that we're use
+    steps:
+      - setup_remote_docker #This allows use to run docker commands just in case
+      - checkout
+      - docker/check
+      - docker/build:
+          image: terencegaffudsu/education-space
+          tag: 1.0.1
+      - docker/push:
+          image: terencegaffudsu/education-space
+          tag: 1.0.1
 
 workflows:
   simple_workflow:
@@ -30,3 +43,6 @@ workflows:
       - test:
           requires:
             - build
+      - build-and-push:
+          requires:
+            - test
