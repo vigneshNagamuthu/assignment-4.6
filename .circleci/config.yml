@@ -2,6 +2,7 @@ version: 2.1
 orbs:
   node: circleci/node@5.0.1
   docker: circleci/docker@2.1.4 #allows us to use docker orb's commands
+  heroku: circleci/heroku@2.0.0  # allows us to use heroku orb's command
 jobs:
   build:
     docker:
@@ -35,6 +36,23 @@ jobs:
       - docker/push:
           image: vignesh991995/education-space
           tag: 1.0.1
+
+deploy:
+    docker:
+      - image: cimg/node:16.10
+    steps:
+      - setup_remote_docker
+      - heroku/install #installs heroku cli for our run command
+      - checkout
+      - run
+        name: Heroku Container Push #the name of the group of commands we are running
+        command: |
+          heroku container:login
+          heroku container:push web -a terencegaffud-su-devops 
+          heroku container:release web -a terencegaffud-su-devops
+        #The push command pushes the image to heroku's container registry
+        #The release command deploys the image from heroku's container registry 
+
 
 workflows:
   simple_workflow:
