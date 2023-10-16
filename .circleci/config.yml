@@ -42,7 +42,7 @@ jobs: #instructions for each step
     docker:
       - image: cimg/node:16.10
     environment:
-      IMAGE_NAME: terencegaffudsu/education-space #the IMAGE_NAME is a variable we could use in our jobs/steps
+      IMAGE_NAME: vignesh991995/education-space #the IMAGE_NAME is a variable we could use in our jobs/steps
     steps:
       - checkout
       - setup_remote_docker
