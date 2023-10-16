@@ -51,6 +51,7 @@ jobs: #instructions for each step
       # $IMAGE_NAME gets the value of the IMAGE_NAME from the environment defined above.
       - snyk/scan:
           docker-image-name: $IMAGE_NAME
+          severity-threshold: high
 
   # deploy:
   #   docker:
