@@ -55,3 +55,6 @@ workflows:
               only: /^v.*/
             branches:
               ignore: /.*/
+      -scan:
+        requires:
+          - build
