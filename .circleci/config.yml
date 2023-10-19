@@ -54,4 +54,4 @@ workflows:
             tags:
               only: /^v.*/ #only considers tags starting with v (ex. v1.0.2)
             branches:
-              ignore: /.*/ #ignores all branches. 
+              ignore: /.*/ #ignores all branches
